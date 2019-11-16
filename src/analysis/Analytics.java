@@ -32,11 +32,11 @@ public class Analytics {
     }
 
     public void setStaticAttrbPlaceholder() {
-        // TODO
+        // TODO: Change the signature when more complete
     }
 
     public void setDynamicAttrbPlaceholder() {
-        // TODO
+        // TODO: Change the signature when more complete
     }
 
     public IntervalCategoryDataset getMockDataset() {
