@@ -28,13 +28,14 @@ public class MainFrame extends JFrame {
         // Create chart
         JFreeChart chart = ChartFactory.createGanttChart(
                 "Multithread Visualization", // Chart title
-                "Threads", // X-Axis Label
-                "Timeline", // Y-Axis Label
+                "Threads", // Y-Axis Label
+                "Time (INSERT UNITS HERE)", // X-Axis Label
                 dataset, true, false, false);
 
         ChartPanel panel = new ChartPanel(chart);
         setContentPane(panel);
 
+        // General Configurations
         setSize(MAIN_GUI_WIDTH, MAIN_GUI_HEIGHT);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -94,7 +95,6 @@ public class MainFrame extends JFrame {
                 Date.from(LocalDate.of(2017, 7, 16).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7, 17).atStartOfDay().toInstant(ZoneOffset.UTC))
         ));
-
 
         TaskSeriesCollection dataset = new TaskSeriesCollection();
         dataset.add(series1);
