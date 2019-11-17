@@ -6,7 +6,6 @@ import javax.swing.*;
 
 import org.jfree.chart.*;
 import org.jfree.chart.entity.CategoryItemEntity;
-import org.jfree.chart.entity.ChartEntity;
 import org.jfree.data.category.IntervalCategoryDataset;
 
 public class MainFrame extends JFrame {
