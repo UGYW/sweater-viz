@@ -41,67 +41,67 @@ public class Analytics {
 
     public IntervalCategoryDataset getMockDataset() {
 
-        TaskSeries series1 = new TaskSeries("Deadlocked");
+        TaskSeries series0 = new TaskSeries("Deadlocked");
 
-        Task task1 = new Task("Thread 1",
+        Task task0 = new Task("Thread 0",
                 Date.from(LocalDate.of(2017,7,3).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7,7).atStartOfDay().toInstant(ZoneOffset.UTC))
         );
-        series1.add(task1);
-//        series1.add(new Task("Thread 1",
+        series0.add(task0);
+//        series0.add(new Task("Thread 0",
 //                Date.from(LocalDate.of(2017,7,3).atStartOfDay().toInstant(ZoneOffset.UTC)),
 //                Date.from(LocalDate.of(2017, 7,7).atStartOfDay().toInstant(ZoneOffset.UTC))
 //        ));
 
-        series1.add(new Task("Thread 2",
+        series0.add(new Task("Thread 1",
                 Date.from(LocalDate.of(2017, 7,10).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7, 14).atStartOfDay().toInstant(ZoneOffset.UTC))
         ));
 
-        series1.add(new Task("Thread 3",
+        series0.add(new Task("Thread 2",
                 Date.from(LocalDate.of(2017, 7,17).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7, 21).atStartOfDay().toInstant(ZoneOffset.UTC))
         ));
 
 
-        TaskSeries series2 = new TaskSeries("Locked");
+        TaskSeries series1 = new TaskSeries("Locked");
 
-        series2.add(new Task("Thread 1",
+        series1.add(new Task("Thread 0",
                 Date.from(LocalDate.of(2017, 7,3).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7,5).atStartOfDay().toInstant(ZoneOffset.UTC))
         ));
 
-        series2.add(new Task("Thread 2",
+        series1.add(new Task("Thread 1",
                 Date.from(LocalDate.of(2017, 7, 6).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7, 17).atStartOfDay().toInstant(ZoneOffset.UTC))
         ));
 
-        series2.add(new Task("Thread 3",
+        series1.add(new Task("Thread 2",
                 Date.from(LocalDate.of(2017, 7, 18).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7, 27).atStartOfDay().toInstant(ZoneOffset.UTC))
         ));
 
-        TaskSeries series3 = new TaskSeries("Running");
+        TaskSeries series2 = new TaskSeries("Running");
 
-        series3.add(new Task("Thread 1",
+        series2.add(new Task("Thread 0",
                 Date.from(LocalDate.of(2017, 7,2).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7, 4).atStartOfDay().toInstant(ZoneOffset.UTC))
         ));
 
-        series3.add(new Task("Thread 2",
+        series2.add(new Task("Thread 1",
                 Date.from(LocalDate.of(2017, 7, 9).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7, 12).atStartOfDay().toInstant(ZoneOffset.UTC))
         ));
 
-        series3.add(new Task("Thread 3",
+        series2.add(new Task("Thread 2",
                 Date.from(LocalDate.of(2017, 7, 16).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7, 17).atStartOfDay().toInstant(ZoneOffset.UTC))
         ));
 
         TaskSeriesCollection dataset = new TaskSeriesCollection();
+        dataset.add(series0);
         dataset.add(series1);
         dataset.add(series2);
-        dataset.add(series3);
         return dataset;
     }
 

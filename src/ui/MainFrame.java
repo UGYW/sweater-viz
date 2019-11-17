@@ -5,12 +5,17 @@ import analysis.Analytics;
 import javax.swing.*;
 
 import org.jfree.chart.*;
+import org.jfree.chart.entity.CategoryItemEntity;
+import org.jfree.chart.entity.ChartEntity;
 import org.jfree.data.category.IntervalCategoryDataset;
 
 public class MainFrame extends JFrame {
 
     private static final int MAIN_GUI_WIDTH = 1200;
     private static final int MAIN_GUI_HEIGHT = 800;
+
+    private ChartPanel panel;
+    private JFreeChart chart;
 
     public MainFrame(String title) {
         super(title);
@@ -34,14 +39,14 @@ public class MainFrame extends JFrame {
     }
 
     private void createChart(IntervalCategoryDataset dataset) {
-        JFreeChart chart = ChartFactory.createGanttChart(
+        chart = ChartFactory.createGanttChart(
                 "Multithread Visualization", // Chart title
                 "Threads", // Y-Axis Label
                 "Time (INSERT UNITS HERE)", // X-Axis Label
                 dataset, true, true, false);
 
         // create panel
-        ChartPanel panel = new ChartPanel(chart);
+        panel = new ChartPanel(chart);
         setContentPane(panel);
 
         // add listener for popup
@@ -54,9 +59,15 @@ public class MainFrame extends JFrame {
         });
     }
 
-    public void displayInfoPopUp(ChartMouseEvent e) {
-        // TODO
-        System.out.println(e.getEntity());
+    private void displayInfoPopUp(ChartMouseEvent e) {
+        // TODO - @David: Use info from entity here as keys to dict on analytic info
+        CategoryItemEntity entity = (CategoryItemEntity) e.getEntity();
+        System.out.println(entity.getSeries());  // @David - series is the category (deadlocked, running, etc)
+        System.out.println(entity.getCategory());  // @David - category is the thread number. it's confusing.
+        // TODO - decide exactly what to display here
+        JOptionPane.showMessageDialog(panel, "Here's some info on the thread you just clicked on",
+                "Thread Information",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
 }
