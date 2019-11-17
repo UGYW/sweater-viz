@@ -39,3 +39,6 @@ The instructions are the same as the DSL project.)
 **Click and Drag**
 * To the _Right_: Zoom In (to selected area)
 * To the _Left_: Zoom Out
+
+**Click on Displayed Bar**
+* Pop-up will display with relevant info

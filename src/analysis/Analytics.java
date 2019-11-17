@@ -43,10 +43,15 @@ public class Analytics {
 
         TaskSeries series1 = new TaskSeries("Deadlocked");
 
-        series1.add(new Task("Thread 1",
+        Task task1 = new Task("Thread 1",
                 Date.from(LocalDate.of(2017,7,3).atStartOfDay().toInstant(ZoneOffset.UTC)),
                 Date.from(LocalDate.of(2017, 7,7).atStartOfDay().toInstant(ZoneOffset.UTC))
-        ));
+        );
+        series1.add(task1);
+//        series1.add(new Task("Thread 1",
+//                Date.from(LocalDate.of(2017,7,3).atStartOfDay().toInstant(ZoneOffset.UTC)),
+//                Date.from(LocalDate.of(2017, 7,7).atStartOfDay().toInstant(ZoneOffset.UTC))
+//        ));
 
         series1.add(new Task("Thread 2",
                 Date.from(LocalDate.of(2017, 7,10).atStartOfDay().toInstant(ZoneOffset.UTC)),
