@@ -49,7 +49,7 @@ public class DynamicAnalysis extends Analysis {
 
     Injector injector;
 
-    String outputDir="./output/";
+    String outputDir="./";
 
     public DynamicAnalysis() {
         injector = new Injector(injectBeforeStart,injectBeforeFinish,injectImport);
@@ -79,7 +79,7 @@ public class DynamicAnalysis extends Analysis {
         if(compilationResult == 0){
             System.out.println(fileToCompile+" compile successful!");
         } else {
-            System.out.println(fileToCompile+" compile failed! error can be found in ./output/errors.txt");
+            System.out.println(fileToCompile+" compile failed! error can be found in errors.txt");
         }
 
         System.out.println("start running compiled java file..");
@@ -87,7 +87,7 @@ public class DynamicAnalysis extends Analysis {
         try {
 //            runProcess("cd");
             runProcess("java -version");
-//            runProcess("java output.HttpDownloader");
+            runProcess("java HttpDownloader");
         } catch (IOException e) {
             e.printStackTrace();
         }
