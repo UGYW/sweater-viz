@@ -49,6 +49,8 @@ public class DynamicAnalysis extends Analysis {
 
     Injector injector;
 
+    String outputDir="./output/";
+
     public DynamicAnalysis() {
         injector = new Injector(injectBeforeStart,injectBeforeFinish,injectImport);
     }
@@ -58,18 +60,18 @@ public class DynamicAnalysis extends Analysis {
         System.out.println("Starting dynamic analysis...");
         System.out.println("injection ongoing...");
         try {
-            injector.injectCode("./input/HttpDownloader.java", "./output/HttpDownloader.java");
+            injector.injectCode("./input/HttpDownloader.java", outputDir+"HttpDownloader.java");
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println("injection finished!");
 
         System.out.println("start compiling injected file...");
-        String fileToCompile = "./output/HttpDownloader.java";
+        String fileToCompile = outputDir+"HttpDownloader.java";
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         FileOutputStream errorStream = null;
         try {
-            errorStream = new FileOutputStream("./output/errors.txt");
+            errorStream = new FileOutputStream(outputDir+"errors.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -81,11 +83,11 @@ public class DynamicAnalysis extends Analysis {
         }
 
         System.out.println("start running compiled java file..");
-        String fileToRun = "output/HttpDownloader";
+        String fileToRun = outputDir+"HttpDownloader";
         try {
 //            runProcess("cd");
-//            runProcess("java --version");
-            runProcess("java output/HttpDownloader");
+            runProcess("java -version");
+//            runProcess("java output.HttpDownloader");
         } catch (IOException e) {
             e.printStackTrace();
         }

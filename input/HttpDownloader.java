@@ -81,7 +81,7 @@ public class HttpDownloader {
 
 		startDownloadMonitor();
 
-		//等待 downloadMonitor 通知下载完成
+
 		try {
 			synchronized(waiting) {
 				waiting.wait();
@@ -98,7 +98,7 @@ public class HttpDownloader {
 				timeElapsed / 1000.0, downloadedBytes.get() / timeElapsed));
 	}
 
-	//检测目标文件是否支持断点续传，以决定是否开启多线程下载文件的不同部分
+
 	public boolean supportResumeDownload() throws IOException {
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestProperty("Range", "bytes=0-");
@@ -123,7 +123,7 @@ public class HttpDownloader {
 		}
 	}
 
-	//监测下载速度及下载状态，下载完成时通知主线程
+
 	public void startDownloadMonitor() {
 		Thread downloadMonitor = new Thread(() -> {
 			int prev = 0;
@@ -150,7 +150,7 @@ public class HttpDownloader {
 		downloadMonitor.start();
 	}
 
-	//对临时文件进行合并或重命名
+
 	public void cleanTempFile() throws IOException {
 		if (multithreaded) {
 			merge();
@@ -161,7 +161,7 @@ public class HttpDownloader {
 		}
 	}
 
-	//合并多线程下载产生的多个临时文件
+
 	public void merge() {
 		try (OutputStream out = new FileOutputStream(localFile)) {
 			byte[] buffer = new byte[1024];
@@ -180,7 +180,7 @@ public class HttpDownloader {
 		}
 	}
 
-	//一个下载线程负责下载文件的某一部分，如果失败则自动重试，直到下载完成
+
 	class DownloadThread extends Thread {
 		private int id;
 		private int start;
@@ -194,7 +194,7 @@ public class HttpDownloader {
 			aliveThreads.incrementAndGet();
 		}
 
-        //保证文件的该部分数据下载完成
+
 		@Override
 		public void run() {
 			boolean success = false;
@@ -210,7 +210,7 @@ public class HttpDownloader {
 			aliveThreads.decrementAndGet();
 		}
 
-        //下载文件指定范围的部分
+
 		public boolean download() {
 			try {
 				HttpURLConnection con = (HttpURLConnection) url.openConnection();
