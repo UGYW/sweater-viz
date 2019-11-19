@@ -9,7 +9,7 @@ public class StaticAnalysis extends Analysis {
     }
 
     @Override
-    protected void conductAnalysis() {
+    public void conductAnalysis() {
 //        analytics.setStaticAttrbPlaceholder();
     }
 

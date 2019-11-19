@@ -13,12 +13,20 @@ public class Injector {
     String mainChecker = "public static void main(String[] args)";
     String mainInjectable = "Some main"; //Should contain code to create monitoring thread
     String endInjectable = "Some end"; //Should contain monitoring thread code
+    String importContent;
     String in = null;
     String out = "";
     FileOutputStream output = null;
 
     public Injector()
     {
+
+    }
+
+    public Injector(String mainStartContent, String mainEnd, String importContent){
+        this.mainInjectable = mainStartContent;
+        this.endInjectable = mainEnd;
+        this.importContent = importContent;
 
     }
 
@@ -31,6 +39,9 @@ public class Injector {
             String [] tokens=in.split("\n");
             StringBuilder str = new StringBuilder("");
 
+            //inject import
+            str.append(importContent);
+
             //Rewrite each line of code.
             for (int i = 0; i < tokens.length; i++) {
                 str.append(tokens[i] + "\n");
@@ -39,10 +50,20 @@ public class Injector {
                 {
                     //Inject code for main()
                     str.append(mainInjectable + "\n");
+                    i++;
+                    //Inject code before main finished
+                    do{
+
+//                        System.out.println("in main function: "+tokens[i]);
+                        str.append(tokens[i++] + "\n");
+
+                    }while(!tokens[i].contains("}"));
+                    str.append(endInjectable);
+                    str.append(tokens[i] + "\n");
                 }
             }
             //Inject code at end.
-            str.append(endInjectable);
+
 
             //Write to output file.
             out = str.toString();

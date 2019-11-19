@@ -3,7 +3,7 @@ package analysis;
 public class Analysis {
     protected Analytics analytics = Analytics.getInstance();
 
-    protected void conductAnalysis() {
+    public void conductAnalysis() {
 //        analytics.setStaticAttrbPlaceholder();
     }
 
