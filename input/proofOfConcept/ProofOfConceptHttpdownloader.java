@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.atomic.AtomicInteger;
 // #### import library #####
-import java.util.*; 
+import java.util.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
@@ -48,69 +48,66 @@ public class ProofOfConceptHttpdownloader {
 	public static void main(String[] args) throws IOException {
 		// ##################### code to add ##########################
 		BufferedWriter writer = new BufferedWriter(new FileWriter(".analysisData.txt"));
-		writer.write("start time:" + System.currentTimeMillis()+"\n");
+		writer.write("start time:" + System.currentTimeMillis() + "\n");
 		Thread monitor = new Thread(() -> {
-				try{
-	
-					writer.write("### momitor thread is running\n");
-				
-					Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-					while(true){
-						writer.write("### threadSet size: "+threadSet.size()+" time: "+System.currentTimeMillis()+"\n");
-						for(Thread t: threadSet){
-							writer.write("### thread info "+t.getId()+" status "+t.getState()+"\n");
-						}
-						Thread.sleep(100);
-						threadSet = Thread.getAllStackTraces().keySet();
-					}
-				}catch (InterruptedException e) {
-					System.out.println("Interrupted exception"+e);
-			   }
-			    catch(IOException ioe){
-					System.out.println("IO exception"+ioe);
-				   
-			   }
-				
-			});
-			monitor.setDaemon(true);
-			monitor.start();
+			try {
 
-		
+				writer.write("### momitor thread is running\n");
+
+				Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+				while (true) {
+					writer.write(
+							"### threadSet size: " + threadSet.size() + " time: " + System.currentTimeMillis() + "\n");
+					for (Thread t : threadSet) {
+						writer.write("### thread info " + t.getId() + " status " + t.getState() + "\n");
+					}
+					Thread.sleep(100);
+					threadSet = Thread.getAllStackTraces().keySet();
+				}
+			} catch (InterruptedException e) {
+				System.out.println("Interrupted exception" + e);
+			} catch (IOException ioe) {
+				System.out.println("IO exception" + ioe);
+
+			}
+
+		});
+		monitor.setDaemon(true);
+		monitor.start();
 
 		// ############################# end of code to add ###########################
 		String url = "http://mirrors.163.com/debian/ls-lR.gz";
 		new HttpDownloader(url, "./ls-lR.gz", 5, 5000).get();
-	
-	
-	// ################## code to add ##############################
-	
-			writer.close();
-	// ############################# end of code to add ###########################
-	}
 
+		// ################## code to add ##############################
+
+		writer.close();
+		// ############################# end of code to add ###########################
+	}
 
 	public ProofOfConceptHttpdownloader(String Url, String localPath) throws MalformedURLException {
 		this.url = new URL(Url);
 		this.localFile = new File(localPath);
 	}
 
-	public ProofOfConceptHttpdownloader(String Url, String localPath,
-			int threadNum, int timeout) throws MalformedURLException {
+	public ProofOfConceptHttpdownloader(String Url, String localPath, int threadNum, int timeout)
+			throws MalformedURLException {
 		this(Url, localPath);
 		this.THREAD_NUM = threadNum;
 		this.TIME_OUT = timeout;
 	}
 
-	//开始下载文件
+	// 开始下载文件
 	public void get() throws IOException {
 		long startTime = System.currentTimeMillis();
 
 		resumable = supportResumeDownload();
-		if (!resumable || THREAD_NUM == 1|| fileSize < MIN_SIZE) multithreaded = false;
+		if (!resumable || THREAD_NUM == 1 || fileSize < MIN_SIZE)
+			multithreaded = false;
 		if (!multithreaded) {
-			new DownloadThread(0, 0, fileSize - 1).start();;
-		}
-		else {
+			new DownloadThread(0, 0, fileSize - 1).start();
+			;
+		} else {
 			endPoint = new int[THREAD_NUM + 1];
 			int block = fileSize / THREAD_NUM;
 			for (int i = 0; i < THREAD_NUM; i++) {
@@ -124,9 +121,9 @@ public class ProofOfConceptHttpdownloader {
 
 		startDownloadMonitor();
 
-		//等待 downloadMonitor 通知下载完成
+		// 等待 downloadMonitor 通知下载完成
 		try {
-			synchronized(waiting) {
+			synchronized (waiting) {
 				waiting.wait();
 			}
 		} catch (InterruptedException e) {
@@ -137,11 +134,11 @@ public class ProofOfConceptHttpdownloader {
 
 		long timeElapsed = System.currentTimeMillis() - startTime;
 		System.out.println("* File successfully downloaded.");
-		System.out.println(String.format("* Time used: %.3f s, Average speed: %d KB/s",
-				timeElapsed / 1000.0, downloadedBytes.get() / timeElapsed));
+		System.out.println(String.format("* Time used: %.3f s, Average speed: %d KB/s", timeElapsed / 1000.0,
+				downloadedBytes.get() / timeElapsed));
 	}
 
-	//检测目标文件是否支持断点续传，以决定是否开启多线程下载文件的不同部分
+	// 检测目标文件是否支持断点续传，以决定是否开启多线程下载文件的不同部分
 	public boolean supportResumeDownload() throws IOException {
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestProperty("Range", "bytes=0-");
@@ -166,7 +163,7 @@ public class ProofOfConceptHttpdownloader {
 		}
 	}
 
-	//监测下载速度及下载状态，下载完成时通知主线程
+	// 监测下载速度及下载状态，下载完成时通知主线程
 	public void startDownloadMonitor() {
 		Thread downloadMonitor = new Thread(() -> {
 			int prev = 0;
@@ -174,7 +171,8 @@ public class ProofOfConceptHttpdownloader {
 			while (true) {
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {}
+				} catch (InterruptedException e) {
+				}
 
 				curr = downloadedBytes.get();
 				System.out.println(String.format("Speed: %d KB/s, Downloaded: %d KB (%.2f%%), Threads: %d",
@@ -193,18 +191,18 @@ public class ProofOfConceptHttpdownloader {
 		downloadMonitor.start();
 	}
 
-	//对临时文件进行合并或重命名
+	// 对临时文件进行合并或重命名
 	public void cleanTempFile() throws IOException {
 		if (multithreaded) {
 			merge();
 			System.out.println("* Temp file merged.");
 		} else {
-			Files.move(Paths.get(localFile.getAbsolutePath() + ".0.tmp"),
-					Paths.get(localFile.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
+			Files.move(Paths.get(localFile.getAbsolutePath() + ".0.tmp"), Paths.get(localFile.getAbsolutePath()),
+					StandardCopyOption.REPLACE_EXISTING);
 		}
 	}
 
-	//合并多线程下载产生的多个临时文件
+	// 合并多线程下载产生的多个临时文件
 	public void merge() {
 		try (OutputStream out = new FileOutputStream(localFile)) {
 			byte[] buffer = new byte[1024];
@@ -223,7 +221,7 @@ public class ProofOfConceptHttpdownloader {
 		}
 	}
 
-	//一个下载线程负责下载文件的某一部分，如果失败则自动重试，直到下载完成
+	// 一个下载线程负责下载文件的某一部分，如果失败则自动重试，直到下载完成
 	class DownloadThread extends Thread {
 		private int id;
 		private int start;
@@ -237,7 +235,7 @@ public class ProofOfConceptHttpdownloader {
 			aliveThreads.incrementAndGet();
 		}
 
-        //保证文件的该部分数据下载完成
+		// 保证文件的该部分数据下载完成
 		@Override
 		public void run() {
 			boolean success = false;
@@ -253,7 +251,7 @@ public class ProofOfConceptHttpdownloader {
 			aliveThreads.decrementAndGet();
 		}
 
-        //下载文件指定范围的部分
+		// 下载文件指定范围的部分
 		public boolean download() {
 			try {
 				HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -262,8 +260,10 @@ public class ProofOfConceptHttpdownloader {
 				con.setReadTimeout(TIME_OUT);
 				con.connect();
 				int partSize = con.getHeaderFieldInt("Content-Length", -1);
-				if (partSize != end - start + 1) return false;
-				if (out == null) out = new FileOutputStream(localFile.getAbsolutePath() + "." + id + ".tmp");
+				if (partSize != end - start + 1)
+					return false;
+				if (out == null)
+					out = new FileOutputStream(localFile.getAbsolutePath() + "." + id + ".tmp");
 				try (InputStream in = con.getInputStream()) {
 					byte[] buffer = new byte[1024];
 					int size;
@@ -274,10 +274,12 @@ public class ProofOfConceptHttpdownloader {
 						out.flush();
 					}
 					con.disconnect();
-					if (start <= end) return false;
-					else out.close();
+					if (start <= end)
+						return false;
+					else
+						out.close();
 				}
-			} catch(SocketTimeoutException e) {
+			} catch (SocketTimeoutException e) {
 				System.out.println("Part " + (id + 1) + " Reading timeout.");
 				return false;
 			} catch (IOException e) {
