@@ -83,8 +83,8 @@ public class DynamicAnalysis extends Analysis {
         System.out.println("start running compiled java file..");
         String fileToRun = "output/HttpDownloader";
         try {
-            runProcess("pwd");
-            runProcess("java --version");
+//            runProcess("cd");
+//            runProcess("java --version");
             runProcess("java output/HttpDownloader");
         } catch (IOException e) {
             e.printStackTrace();
