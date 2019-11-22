@@ -33,7 +33,7 @@ public class ThreadInfoGenerator {
         //Get all tasks from dataset.
         //Get the name of each thread & amount of threads from dataset.
         Analytics analytics = Analytics.getInstance();
-        TaskSeriesCollection dataset = (TaskSeriesCollection)analytics.dataset;
+        TaskSeriesCollection dataset = (TaskSeriesCollection)analytics.getDataset();
         for (int i = 0; i < dataset.getSeriesCount(); i++)
         {
             TaskSeries series = dataset.getSeries(i);

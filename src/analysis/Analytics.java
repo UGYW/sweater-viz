@@ -5,16 +5,18 @@ import org.jfree.data.gantt.Task;
 import org.jfree.data.gantt.TaskSeries;
 import org.jfree.data.gantt.TaskSeriesCollection;
 
-import java.io.*;
-import java.nio.Buffer;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Date;
-import java.util.Scanner;
 
 public class Analytics {
     private static Analytics analytics_instance = null;
-    public static TaskSeriesCollection dataset;
+    private static TaskSeriesCollection dataset;
 
     // TODO: decide exactly what attributes to include
 
@@ -30,7 +32,12 @@ public class Analytics {
         return analytics_instance;
     }
 
-    public IntervalCategoryDataset getDataset() {
+    public IntervalCategoryDataset getDataset()
+    {
+        return dataset;
+    }
+
+    public IntervalCategoryDataset parseDataset() {
         String startTime = "";
         String setStartTime = "";
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
@@ -221,6 +228,7 @@ public class Analytics {
         dataset.add(series0);
         dataset.add(series1);
         dataset.add(series2);
+        this.dataset = dataset;
         return dataset;
     }
 
