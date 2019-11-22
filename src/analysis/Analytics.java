@@ -14,11 +14,12 @@ import java.util.Scanner;
 
 public class Analytics {
     private static Analytics analytics_instance = null;
+    public static TaskSeriesCollection dataset;
 
     // TODO: decide exactly what attributes to include
 
     private Analytics() {
-        // TODO
+         dataset = new TaskSeriesCollection();
     }
 
     public static Analytics getInstance()
@@ -129,7 +130,6 @@ public class Analytics {
         {
             ioe.printStackTrace();
         }
-        TaskSeriesCollection dataset = new TaskSeriesCollection();
         /*
         if (seriesRunnable.getItemCount() != 0) {
             dataset.add(seriesRunnable);
