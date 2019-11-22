@@ -2,7 +2,36 @@
 
 Multithreading visualizer for CPSC410-2019W1 by Coffee Ground Hounds.
 
-<!--TODO: add diagrams of prototype-->
+![Example of Running Program](screencap.png)
+
+## FOR CPSC410 TA
+
+<!--TODO @Charlie: Explain how the dynamic analysis worked-->
+
+### Task Breakdown
+* Dynamic Data Analysis - Andrew
+    + Andrew is going to be deriving information from data Charlie has gathered
+        + Total time the thread has run/locked
+        + Total number of times the thread has run/locked
+* Dynamic Data Gathering - Charlie
+    + Charlie will write the dynamic analysis that detects which threads 
+        are running/locked at what time
+* Merge - David
+    + David will take the data that Andrew and Charlie get from their analysis 
+    and make sure it is delivered to the UI correctly. In more technical terms, David will work on what is probably a Singleton class that the UI and the analysis components access.
+        + More specifically, David parses the logging output 
+        as injected by Charlie's program and turns it into an UI-friendly dataset
+UI/Setup - Uma 
+    + I will work on the Gantt diagram display and onclick events
+    + I also worked on the documentation that you are reading rn :)
+
+### Gestures
+**Click and Drag**
+* To the _Right_: Zoom In (to selected area)
+* To the _Left_: Zoom Out
+
+**Click on Displayed Bar**
+* Pop-up will display with relevant info
 
 ## Setup
 (Assuming everyone is using IntelliJ to run this. 
@@ -31,14 +60,5 @@ The instructions are the same as the DSL project.)
         select the “Jars or directories” option, and
         add the five .jar files you downloaded in Step 2. 
 
-## Instructions
 
-<!-- Add running instructions, if applicable-->
 
-### Gestures
-**Click and Drag**
-* To the _Right_: Zoom In (to selected area)
-* To the _Left_: Zoom Out
-
-**Click on Displayed Bar**
-* Pop-up will display with relevant info
