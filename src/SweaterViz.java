@@ -18,14 +18,6 @@ public class SweaterViz {
         Analysis static_analysis = new StaticAnalysis();
         Analysis dynamic_analysis = new DynamicAnalysis();
         dynamic_analysis.conductAnalysis();
-
-        //Parse Dataset
-        Analytics.getInstance().parseDataset();
-
-        ThreadInfoGenerator tiGenerator = new ThreadInfoGenerator();
-        tiGenerator.generateThreadInfos();
-        List<ThreadInfo> infos = tiGenerator.getThreadInfos(); //UI needs to get this.
-
         MainFrame example = new MainFrame("Gantt Chart Example");
     }
 }

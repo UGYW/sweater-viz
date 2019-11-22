@@ -1,11 +1,14 @@
 package ui;
 
 import analysis.Analytics;
+import analysis.ThreadInfo;
+import analysis.ThreadInfoGenerator;
 import org.jfree.chart.*;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.data.category.IntervalCategoryDataset;
 
 import javax.swing.*;
+import java.util.List;
 
 public class MainFrame extends JFrame {
 
@@ -14,13 +17,18 @@ public class MainFrame extends JFrame {
 
     private ChartPanel panel;
     private JFreeChart chart;
+    private List<ThreadInfo> infos;
 
     public MainFrame(String title) {
         super(title);
         // Create dataset
         Analytics analytics_instance = Analytics.getInstance();
 //        IntervalCategoryDataset dataset = analytics_instance.getMockDataset();
-        IntervalCategoryDataset dataset = analytics_instance.getDataset();
+        IntervalCategoryDataset dataset = Analytics.getInstance().parseDataset();
+
+        ThreadInfoGenerator tiGenerator = new ThreadInfoGenerator();
+        tiGenerator.generateThreadInfos();
+        infos = tiGenerator.getThreadInfos(); //UI needs to get this.
 
         // Create chart
         createChart(dataset);
@@ -74,7 +82,21 @@ public class MainFrame extends JFrame {
                     break;
             default: series = " went to default";
         }
-
+        String thread = entity.getCategory().toString();
+        for (int i = 0; i < infos.size(); i++) {
+            if (thread.equals(infos.get(i).getThreadName())) {
+                String threadStartTime = infos.get(i).getThreadStartTime().toString();
+                String threadEndTime = infos.get(i).getThreadEndTime().toString();
+                String totalWaitingTime = String.valueOf(infos.get(i).getTotalWaitingTime());
+                String totalTimedWaitingTime = String.valueOf(infos.get(i).getTotalTimed_WaitingTime());
+                String totalRunnableTime = String.valueOf(infos.get(i).getTotalRunningTime());
+                String totalLockedTime = String.valueOf(infos.get(i).getTotalLockedTime());
+                String totalWaitingAmount = String.valueOf(infos.get(i).getTotalWaitingAmount());
+                String totalTimeWaitingAmount = String.valueOf(infos.get(i).getTotalTimed_WaitingAmount());
+                String totalLockedAmount = String.valueOf(infos.get(i).getTotalLockedAmount());
+                String totalRunnableAmount = String.valueOf(infos.get(i).getTotalRunningAmount());
+            }
+        }
         // TODO - decide exactly what to display here
         JOptionPane.showMessageDialog(panel, entity.getCategory() + series,
                 "Thread Information",
