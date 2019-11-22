@@ -37,7 +37,7 @@ public class Analytics {
         TaskSeries seriesWaiting = new TaskSeries("Waiting");
         TaskSeries seriesRunnable = new TaskSeries("Runnable");
         TaskSeries seriesTimedWaiting = new TaskSeries("TimedWaiting");
-        String [] times = new String[500];
+        String [] times = new String[1000];
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("analysisData.txt"));
@@ -51,11 +51,11 @@ public class Analytics {
                     i++;
                     fileRead = br.readLine();
                 }
-                else {
+                else  {
                     fileRead = br.readLine();
+                    }
                 }
             }
-        }
         // handle exceptions
         catch (FileNotFoundException fnfe)
         {
@@ -83,26 +83,33 @@ public class Analytics {
                     if (times[j+1] == null) {
                         times[j+1] = times[j];
                     }
+                    fileRead = br.readLine();
                 }
-                if (fileRead.contains("Thread-")) {
-                    String[] tokenize = fileRead.split(" ");
-                    String thread = tokenize[5];
-                    String status = tokenize[7];
+                if (fileRead.contains("thread info")) {
+                    String[] threadInfo = fileRead.split(" ");
+                    String name = "Thread " + threadInfo[3];
+                    int size = threadInfo.length;
+                    String status = threadInfo[size-1];
                     switch(status) {
                         case "RUNNABLE":
                             Long sTimeRun = Long.parseLong(times[j]);
                             Long fTimeRun = Long.parseLong(times[j+1]);
-                            seriesRunnable.add(new Task(thread, new Date(sTimeRun), new Date(fTimeRun)));
-                        break;
+                            seriesRunnable.add(new Task(name, new Date(sTimeRun), new Date(fTimeRun)));
+                            break;
                         case "WAITING":
                             Long sTimeWait = Long.parseLong(times[j]);
                             Long fTimeWait = Long.parseLong(times[j+1]);
-                            seriesWaiting.add(new Task(thread, new Date(sTimeWait), new Date(fTimeWait)));
-                        break;
+                            seriesWaiting.add(new Task(name, new Date(sTimeWait), new Date(fTimeWait)));
+                            break;
                         case "TIMED_WAITING":
                             Long sTime = Long.parseLong(times[j]);
                             Long fTime = Long.parseLong(times[j+1]);
-                            seriesTimedWaiting.add(new Task(thread, new Date(sTime), new Date(fTime)));
+                            seriesTimedWaiting.add(new Task(name, new Date(sTime), new Date(fTime)));
+                            break;
+                        case "LOCKED":
+                            Long lsTime = Long.parseLong(times[j]);
+                            Long lfTime = Long.parseLong(times[j+1]);
+                            seriesLocked.add(new Task(name, new Date(lsTime), new Date(lfTime)));
                             break;
                         default: break;
                     }
@@ -123,6 +130,7 @@ public class Analytics {
             ioe.printStackTrace();
         }
         TaskSeriesCollection dataset = new TaskSeriesCollection();
+        /*
         if (seriesRunnable.getItemCount() != 0) {
             dataset.add(seriesRunnable);
         }
@@ -134,7 +142,11 @@ public class Analytics {
         }
         if (seriesTimedWaiting.getItemCount() != 0) {
             dataset.add(seriesTimedWaiting);
-        }
+        }*/
+        dataset.add(seriesRunnable);
+        dataset.add(seriesWaiting);
+        dataset.add(seriesLocked);
+        dataset.add(seriesTimedWaiting);
         return dataset;
     }
 
