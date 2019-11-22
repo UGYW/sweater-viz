@@ -71,6 +71,16 @@ public class MainFrame extends JFrame {
         System.out.println(entity.getSeries());  // @David - series is the category (deadlocked, running, etc)
         System.out.println(entity.getCategory());// @David - category is the thread number. it's confusing.
         String series;
+        String threadStartTime = "";
+        String threadEndTime = "";
+        String totalTimedWaitingTime = "";
+        String totalWaitingTime = "";
+        String totalLockedTime = "";
+        String totalRunnableTime = "";
+        String totalRunnableAmount = "";
+        String totalLockedAmount = "";
+        String totalWaitingAmount = "";
+        String totalTimedWaitingAmount = "";
         switch(entity.getSeries()) {
             case 0: series = " is runnable";
                     break;
@@ -85,20 +95,24 @@ public class MainFrame extends JFrame {
         String thread = entity.getCategory().toString();
         for (int i = 0; i < infos.size(); i++) {
             if (thread.equals(infos.get(i).getThreadName())) {
-                String threadStartTime = infos.get(i).getThreadStartTime().toString();
-                String threadEndTime = infos.get(i).getThreadEndTime().toString();
-                String totalWaitingTime = String.valueOf(infos.get(i).getTotalWaitingTime());
-                String totalTimedWaitingTime = String.valueOf(infos.get(i).getTotalTimed_WaitingTime());
-                String totalRunnableTime = String.valueOf(infos.get(i).getTotalRunningTime());
-                String totalLockedTime = String.valueOf(infos.get(i).getTotalLockedTime());
-                String totalWaitingAmount = String.valueOf(infos.get(i).getTotalWaitingAmount());
-                String totalTimeWaitingAmount = String.valueOf(infos.get(i).getTotalTimed_WaitingAmount());
-                String totalLockedAmount = String.valueOf(infos.get(i).getTotalLockedAmount());
-                String totalRunnableAmount = String.valueOf(infos.get(i).getTotalRunningAmount());
+                threadStartTime = infos.get(i).getThreadStartTime().toString();
+                threadEndTime = infos.get(i).getThreadEndTime().toString();
+                totalWaitingTime = String.valueOf(infos.get(i).getTotalWaitingTime());
+                totalTimedWaitingTime = String.valueOf(infos.get(i).getTotalTimed_WaitingTime());
+                totalRunnableTime = String.valueOf(infos.get(i).getTotalRunningTime());
+                totalLockedTime = String.valueOf(infos.get(i).getTotalLockedTime());
+                totalWaitingAmount = String.valueOf(infos.get(i).getTotalWaitingAmount());
+                totalTimedWaitingAmount = String.valueOf(infos.get(i).getTotalTimed_WaitingAmount());
+                totalLockedAmount = String.valueOf(infos.get(i).getTotalLockedAmount());
+                totalRunnableAmount = String.valueOf(infos.get(i).getTotalRunningAmount());
+                break;
             }
         }
         // TODO - decide exactly what to display here
-        JOptionPane.showMessageDialog(panel, entity.getCategory() + series,
+        JOptionPane.showMessageDialog(panel, "ThreadStartTime: " + threadStartTime + "\n" + "ThreadEndTime: " + threadEndTime + "\n" + "TotalRunnableTime: " + totalRunnableTime + "\n" +
+                "TotalWaitingTime: " + totalWaitingTime + "\n" + "TotalTimedWaitingTime: " + totalTimedWaitingTime + "\n" + "TotalLockedTime: " + totalLockedTime + "\n" +
+                "TotalRunnableAmount: " + totalRunnableAmount + "\n" + "TotalWaitingAmount: " + totalWaitingAmount + "\n" + "TotalTimeWaitingAmount: " + totalTimedWaitingAmount + "\n" +
+                "TotalLockedAmount: " + totalLockedAmount,
                 "Thread Information",
                 JOptionPane.INFORMATION_MESSAGE);
     }
