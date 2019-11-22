@@ -6,7 +6,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.*;
 
-public class DynamicAnalysis extends Analysis {
+public class DynamicAnalysis {
     String injectImport="// #### import library #####\n" +
             "import java.util.*; \n" +
             "import java.io.BufferedWriter;\n" +
@@ -55,7 +55,6 @@ public class DynamicAnalysis extends Analysis {
         injector = new Injector(injectBeforeStart,injectBeforeFinish,injectImport);
     }
 
-    @Override
     public void conductAnalysis() {
         System.out.println("Starting dynamic analysis...");
         System.out.println("injection ongoing...");

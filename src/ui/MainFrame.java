@@ -19,12 +19,14 @@ public class MainFrame extends JFrame {
     private JFreeChart chart;
     private List<ThreadInfo> infos;
 
+    private IntervalCategoryDataset dataset;
+
     public MainFrame(String title) {
         super(title);
         // Create dataset
         Analytics analytics_instance = Analytics.getInstance();
 //        IntervalCategoryDataset dataset = analytics_instance.getMockDataset();
-        IntervalCategoryDataset dataset = Analytics.getInstance().parseDataset();
+        dataset = Analytics.getInstance().parseDataset();
 
         ThreadInfoGenerator tiGenerator = new ThreadInfoGenerator();
         tiGenerator.generateThreadInfos();
@@ -46,9 +48,9 @@ public class MainFrame extends JFrame {
 
     private void createChart(IntervalCategoryDataset dataset) {
         chart = ChartFactory.createGanttChart(
-                "Multithread Visualization", // Chart title
+                "Multithreading Gantt Display", // Chart title
                 "Threads", // Y-Axis Label
-                "Time (INSERT UNITS HERE)", // X-Axis Label
+                "Time", // X-Axis Label
                 dataset, true, true, false);
 
         // create panel
@@ -66,11 +68,11 @@ public class MainFrame extends JFrame {
     }
 
     private void displayInfoPopUp(ChartMouseEvent e) {
-        // TODO - @David: Use info from entity here as keys to dict on analytic info
         CategoryItemEntity entity = (CategoryItemEntity) e.getEntity();
         System.out.println(entity.getSeries());  // @David - series is the category (deadlocked, running, etc)
         System.out.println(entity.getCategory());// @David - category is the thread number. it's confusing.
         String series;
+        String threadid = "";
         String threadStartTime = "";
         String threadEndTime = "";
         String totalTimedWaitingTime = "";
@@ -95,6 +97,7 @@ public class MainFrame extends JFrame {
         String thread = entity.getCategory().toString();
         for (int i = 0; i < infos.size(); i++) {
             if (thread.equals(infos.get(i).getThreadName())) {
+                threadid = infos.get(i).getThreadName();
                 threadStartTime = infos.get(i).getThreadStartTime().toString();
                 threadEndTime = infos.get(i).getThreadEndTime().toString();
                 totalWaitingTime = String.valueOf(infos.get(i).getTotalWaitingTime());
@@ -108,12 +111,11 @@ public class MainFrame extends JFrame {
                 break;
             }
         }
-        // TODO - decide exactly what to display here
-        JOptionPane.showMessageDialog(panel, "ThreadStartTime: " + threadStartTime + "\n" + "ThreadEndTime: " + threadEndTime + "\n" + "TotalRunnableTime: " + totalRunnableTime + "\n" +
-                "TotalWaitingTime: " + totalWaitingTime + "\n" + "TotalTimedWaitingTime: " + totalTimedWaitingTime + "\n" + "TotalLockedTime: " + totalLockedTime + "\n" +
-                "TotalRunnableAmount: " + totalRunnableAmount + "\n" + "TotalWaitingAmount: " + totalWaitingAmount + "\n" + "TotalTimeWaitingAmount: " + totalTimedWaitingAmount + "\n" +
-                "TotalLockedAmount: " + totalLockedAmount,
-                "Thread Information",
+        JOptionPane.showMessageDialog(panel, "Thread Start Time: " + threadStartTime + "\n" + "Thread End Time: " + threadEndTime + "\n" + "Total Runnable Time: " + totalRunnableTime + "ms\n" +
+                "Total Waiting Time: " + totalWaitingTime + "ms\n" + "Total Timed WaitingTime: " + totalTimedWaitingTime + "ms\n" + "Total Locked Time: " + totalLockedTime + "ms\n" +
+                "Total Runnable Number of Times: " + totalRunnableAmount + "\n" + "Total Waiting Number of Times: " + totalWaitingAmount + "\n" + "Total Time Waiting Number of Times: " + totalTimedWaitingAmount + "\n" +
+                "Total Locked Number of Times: " + totalLockedAmount,
+                threadid +  " Information",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 

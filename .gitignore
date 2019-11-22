@@ -1,3 +1,10 @@
 .idea
 out
 jars
+.vscode
+analysisData.txt
+errors.txt
+HttpDownloader.class
+HttpDownloader.java
+ls-lR.gz
+HttpDownloader$DownloadThread.class

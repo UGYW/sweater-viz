@@ -15,9 +15,8 @@ public class SweaterViz {
 //            System.out.println(e);
 //        }
 
-        Analysis static_analysis = new StaticAnalysis();
-        Analysis dynamic_analysis = new DynamicAnalysis();
+        DynamicAnalysis dynamic_analysis = new DynamicAnalysis();
         dynamic_analysis.conductAnalysis();
-        MainFrame example = new MainFrame("Gantt Chart Example");
+        MainFrame mf = new MainFrame("SweaterViz");
     }
 }
