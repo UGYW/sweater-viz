@@ -22,6 +22,6 @@ public class SweaterViz {
         Analysis dynamic_analysis = new DynamicAnalysis();
         dynamic_analysis.conductAnalysis();
 
-//        MainFrame example = new MainFrame("Gantt Chart Example");
+        MainFrame example = new MainFrame("Gantt Chart Example");
     }
 }

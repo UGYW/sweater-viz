@@ -20,8 +20,8 @@ public class MainFrame extends JFrame {
         super(title);
         // Create dataset
         Analytics analytics_instance = Analytics.getInstance();
-        IntervalCategoryDataset dataset = analytics_instance.getMockDataset();
-//        IntervalCategoryDataset dataset = Analytics.getDataset();
+//        IntervalCategoryDataset dataset = analytics_instance.getMockDataset();
+        IntervalCategoryDataset dataset = analytics_instance.getDataset();
 
         // Create chart
         createChart(dataset);
@@ -62,9 +62,22 @@ public class MainFrame extends JFrame {
         // TODO - @David: Use info from entity here as keys to dict on analytic info
         CategoryItemEntity entity = (CategoryItemEntity) e.getEntity();
         System.out.println(entity.getSeries());  // @David - series is the category (deadlocked, running, etc)
-        System.out.println(entity.getCategory());  // @David - category is the thread number. it's confusing.
+        System.out.println(entity.getCategory());// @David - category is the thread number. it's confusing.
+        String series;
+        switch(entity.getSeries()) {
+            case 0: series = " is runnable";
+                    break;
+            case 1: series = " is waiting";
+                    break;
+            case 2: series = " is locked";
+                    break;
+            case 3: series = " is timed waiting";
+                    break;
+            default: series = " went to default";
+        }
+
         // TODO - decide exactly what to display here
-        JOptionPane.showMessageDialog(panel, "Here's some info on the thread you just clicked on",
+        JOptionPane.showMessageDialog(panel, entity.getCategory() + series,
                 "Thread Information",
                 JOptionPane.INFORMATION_MESSAGE);
     }
