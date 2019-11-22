@@ -1,12 +1,11 @@
 package ui;
 
 import analysis.Analytics;
-
-import javax.swing.*;
-
 import org.jfree.chart.*;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.data.category.IntervalCategoryDataset;
+
+import javax.swing.*;
 
 public class MainFrame extends JFrame {
 

@@ -1,4 +1,5 @@
 import analysis.*;
+import ui.MainFrame;
 
 import java.util.List;
 
@@ -23,6 +24,6 @@ public class SweaterViz {
         tiGenerator.generateThreadInfos();
         List<ThreadInfo> infos = tiGenerator.getThreadInfos(); //UI needs to get this.
         int a = 1;
-//        MainFrame example = new MainFrame("Gantt Chart Example");
+        MainFrame example = new MainFrame("Gantt Chart Example");
     }
 }
