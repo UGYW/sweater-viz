@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by Andrew on 2019-11-21.
  */
+
 public class ThreadInfo {
 
     private String threadName;
@@ -18,10 +19,10 @@ public class ThreadInfo {
     private List<Task> waitingTasks;
     private List<Task> lockedTasks;
     private List<Task> timed_waitingTasks;
-    private int totalRunningTime;
-    private int totalWaitingTime;
-    private int totalLockedTime;
-    private int totalTimed_WaitingTime;
+    private long totalRunningTime;
+    private long totalWaitingTime;
+    private long totalLockedTime;
+    private long totalTimed_WaitingTime;
     private int totalRunningAmount;
     private int totalWaitingAmount;
     private int totalLockedAmount;
@@ -29,7 +30,10 @@ public class ThreadInfo {
 
     public ThreadInfo()
     {
-        //TODO: Initialize
+        runningTasks = new ArrayList<Task>();
+        waitingTasks = new ArrayList<Task>();
+        lockedTasks = new ArrayList<Task>();
+        timed_waitingTasks = new ArrayList<Task>();
     }
 
     public String getThreadName() {
@@ -98,35 +102,35 @@ public class ThreadInfo {
         this.threadEndTime = threadEndTime;
     }
 
-    public int getTotalRunningTime() {
+    public long getTotalRunningTime() {
         return totalRunningTime;
     }
 
-    public void setTotalRunningTime(int totalRunningTime) {
+    public void setTotalRunningTime(long totalRunningTime) {
         this.totalRunningTime = totalRunningTime;
     }
 
-    public int getTotalWaitingTime() {
+    public long getTotalWaitingTime() {
         return totalWaitingTime;
     }
 
-    public void setTotalWaitingTime(int totalWaitingTime) {
+    public void setTotalWaitingTime(long totalWaitingTime) {
         this.totalWaitingTime = totalWaitingTime;
     }
 
-    public int getTotalLockedTime() {
+    public long getTotalLockedTime() {
         return totalLockedTime;
     }
 
-    public void setTotalLockedTime(int totalLockedTime) {
+    public void setTotalLockedTime(long totalLockedTime) {
         this.totalLockedTime = totalLockedTime;
     }
 
-    public int getTotalTimed_WaitingTime() {
+    public long getTotalTimed_WaitingTime() {
         return totalTimed_WaitingTime;
     }
 
-    public void setTotalTimed_WaitingTime(int totalTimed_WaitingTime) {
+    public void setTotalTimed_WaitingTime(long totalTimed_WaitingTime) {
         this.totalTimed_WaitingTime = totalTimed_WaitingTime;
     }
 
