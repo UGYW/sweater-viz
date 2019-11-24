@@ -59,6 +59,14 @@ The instructions are the same as the DSL project.)
             to the right or below the list of dependencies, 
         select the “Jars or directories” option, and
         add the five .jar files you downloaded in Step 2. 
+        
+        
+### Dynamic Analysis
+Dynamic analysis works by injecting analytic code into original code base. The injected code is a monitoring thread running in the background.
+This monitor thread will get all running thread id, name and status information every 100 milliseconds.
+After the injection finished, our program will recompile the injected java code file, then run it.
+The dynamic analytic data will be generated while the code this running. After the run, the information we need will be output to analysisData.txt file.
+David and Andrew will parse this file to get data UI needs to display.
 
 
-
+    
