@@ -16,8 +16,12 @@ David and Andrew will parse this file to get data UI needs to display.
 ### Task Breakdown
 * Dynamic Data Analysis - Andrew
     + Andrew is going to be deriving information from data Charlie has gathered
-        + Total time the thread has run/locked
-        + Total number of times the thread has run/locked
+        + Total time the thread has run/locked/waiting
+        + Total number of times the thread has run/locked/waiting
+        + The starting time of a thread.
+        + The termining time of a thread.
+    + Also helped with dynamic data gathering by writing code to locate and inject stuff after the main() function.
+    + Ran user tests.
 * Dynamic Data Gathering - Charlie
     + Charlie will write the dynamic analysis that detects which threads 
         are running/locked at what time
